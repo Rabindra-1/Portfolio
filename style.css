@@ -211,50 +211,68 @@ main h1 {
   transition: transform 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Card ko size */
-.intro{grid-area: intro; min-height: 300px;}
-.tech{grid-area: tech; min-height: 450px;}
-.time{grid-area: time; min-height: 220px;}
-.passion{grid-area: passion; min-height: 220px;}
+.intro {
+  grid-area: intro;
+  min-height: 300px;
+}
 
-.card:hover{
+.tech {
+  grid-area: tech;
+  min-height: 450px;
+}
+
+.time {
+  grid-area: time;
+  min-height: 220px;
+}
+
+.passion {
+  grid-area: passion;
+  min-height: 220px;
+}
+
+.card:hover {
   border-color: transparent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   transform: translateY(-5px);
 }
 
-.card::before{
+.card::before {
   content: '';
   position: absolute;
   inset: 0 0 0 0;
-  background: radial-gradient(circle at var(--x) var(--y), rgba(124,233,230,0.1),transparent 40%);
+  background: radial-gradient(circle at var(--x) var(--y), rgba(124, 233, 230, 0.1), transparent 40%);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 1;
 }
-.card:hover::before{
+
+.card:hover::before {
   opacity: 1;
 }
 
-.intro-title{
+.intro-title {
   font-size: 2rem;
-  color:#ffffff;
+  color: #ffffff;
   font-weight: 300;
-  margin-top: 4rem;
+  margin-top: 0.5rem;
 }
-.intro-text{
+
+.intro-text {
   color: #7b7b7b;
   line-height: 1.6;
   margin-top: 2rem;
-  max-width: 30rem;
+  max-width: 35rem;
   text-align: justify;
 
 }
-.grid .background-img{
+
+.grid .background-img {
   position: absolute;
   top: 0px;
   inset: -1% -1% -1% -1%;
@@ -263,9 +281,38 @@ main h1 {
   object-fit: cover;
   z-index: -1;
 }
-.self-image{
+
+.self-image {
   position: absolute;
-  top:6%;
+  top: 6%;
   right: 2%;
+  width: 400px;
+  height: 400px;
+
 
 }
+
+.grid .skills {
+  position: absolute;
+  bottom: 5%;
+left: 15%;
+width: 70%;
+}
+
+.grid .btn{
+position: absolute;
+bottom: 10%;
+padding: 0.75rem 1.5rem;
+background-color: rgba(124, 233, 230, 0.1);
+color:#76b0ab;
+border-radius: 50px;
+border: none;
+cursor: pointer;
+transition: 0.3s ease;
+z-index: 1;
+}
+.grid .btn:hover{
+  background-color: #76b0ab;
+  color: black;
+}
+
