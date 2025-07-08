@@ -288,31 +288,31 @@ main h1 {
   right: 2%;
   width: 400px;
   height: 400px;
-
+mix-blend-mode: lighten;
 
 }
 
 .grid .skills {
   position: absolute;
   bottom: 5%;
-left: 15%;
-width: 70%;
+  left: 15%;
+  width: 70%;
 }
 
-.grid .btn{
-position: absolute;
-bottom: 10%;
-padding: 0.75rem 1.5rem;
-background-color: rgba(124, 233, 230, 0.1);
-color:#76b0ab;
-border-radius: 50px;
-border: none;
-cursor: pointer;
-transition: 0.3s ease;
-z-index: 1;
+.grid .btn {
+  position: absolute;
+  bottom: 10%;
+  padding: 0.75rem 1.5rem;
+  background-color: rgba(124, 233, 230, 0.1);
+  color: #76b0ab;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 1;
 }
-.grid .btn:hover{
+
+.grid .btn:hover {
   background-color: #76b0ab;
   color: black;
 }
-
