@@ -89,7 +89,7 @@ main h1 {
 }
 
 .location {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -178,7 +178,7 @@ main h1 {
 
 .about-section {
   width: 100%;
-  margin-top: 20rem;
+  margin-top: 10rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -288,7 +288,7 @@ main h1 {
   right: 2%;
   width: 400px;
   height: 400px;
-mix-blend-mode: lighten;
+  mix-blend-mode: lighten;
 
 }
 
@@ -315,4 +315,79 @@ mix-blend-mode: lighten;
 .grid .btn:hover {
   background-color: #76b0ab;
   color: black;
+}
+
+
+
+/* Project section */
+.project-section {
+  width: 100%;
+  margin-top: 15rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-section h3 {
+  margin-bottom: 5%;
+  font-size: 5rem;
+  background-image: linear-gradient(rgb(133, 133, 133), rgb(255, 255, 255));
+  color: transparent;
+  background-clip: text;
+
+}
+
+.slider {
+  height: var(--height);
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right,
+      transparent,
+      #000 10% 90%, transparent);
+
+}
+
+.slider .list {
+  display: flex;
+  max-width: calc(var(--width) * var(--quantity));
+  position: relative;
+}
+
+.slider .list .item {
+  width: var(--width);
+  height: var(--height);
+  position: absolute;
+  left: 80%;
+  animation: autoRun 5s linear infinite;
+  transition: filter 0.5s;
+  animation-delay: calc((10s / var(--quantity))*(var(--position) - 1) - 10s)!important;
+  transition: 0.5s;
+}
+
+.slider .list .item video {
+  margin-top: 4rem;
+  width: 100%;
+  border-radius: 1rem;
+
+}
+
+@keyframes autoRun {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: calc(var(--width) * -1);
+  }
+}
+.slider:hover .item {
+    animation-play-state: paused!important;
+    filter: grayscale(1);
+}
+
+.slider .item:hover {
+    filter: grayscale(0);
+    scale: 1.2;
 }
