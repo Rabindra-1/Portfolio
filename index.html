@@ -1,137 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet" />
-  <link href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css" rel="stylesheet" />
-</head>
+  <body>
+    <!-- Logo ra contact button haruko section -->
+    <header>
+      <div class="logo">RAWAN</div>
+      <button class="contact-btn">Contact</button>
+    </header>
 
-<body>
-  <!-- Logo ra contact button haruko section -->
-  <header>
-    <div class="logo">RAWAN</div>
-    <button class="contact-btn">Contact</button>
-  </header>
+    <!-- Front Section First Page -->
+    <main>
+      <div class="title-section">
+        <h1>WEB DEVELOPER</h1>
+        <div class="location">
+          <p>
+            BASED <br />
+            In <br />NEPAL
+          </p>
+        </div>
+      </div>
 
-  <!-- Front Section First Page -->
-  <main>
-    <div class="title-section">
-      <h1>WEB DEVELOPER</h1>
-      <div class="location">
-        <p>
-          BASED <br />
-          In <br />NEPAL
+      <div class="bio-section">
+        <p class="bio">
+          <span style="color: #76b0ab">Rabindra Kumar Sah </span> is currently
+          pursuing a Bachelor of Science in Computer Science and Information
+          Technology (BSc.CSIT). With a strong interest in technology and
+          software development, he is focused on building a solid foundation in
+          <span style="color: rgb(136, 44, 44)"
+            >programming, data structures, and system design.</span
+          >
         </p>
       </div>
-    </div>
 
-    <div class="bio-section">
-      <p class="bio">
-        <span style="color: #76b0ab">Rabindra Kumar Sah </span> is currently
-        pursuing a Bachelor of Science in Computer Science and Information
-        Technology (BSc.CSIT). With a strong interest in technology and
-        software development, he is focused on building a solid foundation in
-        <span style="color: rgb(136, 44, 44)">programming, data structures, and system design.</span>
-      </p>
-    </div>
+      <div class="scroll-down"></div>
 
-    <div class="scroll-down"></div>
+      <script
+        type="module"
+        src="https://unpkg.com/@splinetool/viewer@1.10.19/build/spline-viewer.js"
+      ></script>
+      <spline-viewer
+        class="model3d"
+        loading-anim-type="none"
+        url="https://prod.spline.design/fueagLqjD8ijVJdA/scene.splinecode"
+      ></spline-viewer>
+    </main>
 
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.19/build/spline-viewer.js"></script>
-    <spline-viewer class="model3d" loading-anim-type="none"
-      url="https://prod.spline.design/fueagLqjD8ijVJdA/scene.splinecode"></spline-viewer>
-  </main>
+    <!-- About Us section -->
 
-  <!-- About Us section -->
-
-
-  <section class="about-section">
-    <h1 class="about-title">About Me</h1>
-    <div class="grid">
-      <div class="card intro">
-        <h2 class="intro-title">HI THERE, I'M RABINDRA</h2>
-        <p class="intro-text">
-          I am a passionate and detail-oriented developer with a strong
-          foundation in programming, Linux system administration, and AI-based
-          application development. Currently pursuing academic projects that
-          integrate RESTful backend systems, data analysis, and intuitive
-          frontend interfaces, I strive to build efficient, user-focused
-          solutions without relying on external AI APIs. I have hands-on
-          experience working with Arch Linux, particularly with Hyprland and
-          Wayland-based window managers, customizing workflows using tools
-          like Waybar, Foot, Kitty, and Konsole. My systems knowledge goes
-          hand-in-hand with my software development background, enabling me to
-          deliver powerful, optimized environments for both development and
-          daily use.
-        </p>
-        <img src="images/gradient.png" alt="" class="background-img">
-        <div class="model-box"></div>
-        <img src="images/Rabindra.png" alt="" class="self-image">
+    <section class="about-section">
+      <h1 class="about-title">About Me</h1>
+      <div class="grid">
+        <div class="card intro">
+          <h2 class="intro-title">HI THERE, I'M RABINDRA</h2>
+          <p class="intro-text">
+            I am a passionate and detail-oriented developer with a strong
+            foundation in programming, Linux system administration, and AI-based
+            application development. Currently pursuing academic projects that
+            integrate RESTful backend systems, data analysis, and intuitive
+            frontend interfaces, I strive to build efficient, user-focused
+            solutions without relying on external AI APIs. I have hands-on
+            experience working with Arch Linux, particularly with Hyprland and
+            Wayland-based window managers, customizing workflows using tools
+            like Waybar, Foot, Kitty, and Konsole. My systems knowledge goes
+            hand-in-hand with my software development background, enabling me to
+            deliver powerful, optimized environments for both development and
+            daily use.
+          </p>
+          <img src="images/gradient.png" alt="" class="background-img" />
+          <div class="model-box"></div>
+          <img src="images/Rabindra.png" alt="" class="self-image" />
+        </div>
+        <div class="card tech">
+          <h2 class="intro-title">TECH STACK</h2>
+          <p class="intro-text">
+            I am proficient in Python , Java , and Bash , with hands-on
+            experience in building backend logic, academic AI projects, and
+            Linux automation. I work confidently with REST APIs , data analysis
+            libraries like NumPy and pandas , and frameworks such as PyTorch .
+            My expertise extends to Linux system administration , particularly
+            on Arch Linux with Hyprland , where I’ve customized environments
+            using tools like Waybar , Foot , Kitty , swww , and hyprpaper . I
+            also have experience in configuring systemd , udev rules , and
+            notification systems like `notify-send` and `mako`. Additionally,
+            I’m familiar with Git/GitHub , SSH key setup , basic
+            HTML/CSS/JavaScript , and development environments like VS Code and
+            NetBeans , allowing me to manage projects from terminal to UI
+            efficiently.
+          </p>
+          <img src="images/gradient2.png" alt="" class="background-img" />
+          <img src="images/skillsgroup.png" alt="skillsimage" class="skills" />
+        </div>
+        <div class="card time">
+          <h2 class="intro-title">
+            VERY FLEXIBLE WITH TIMEZONE, COMMUNICATION & LOCATION
+          </h2>
+          <p class="intro-text">
+            Based in Nepal, Bari and open to remote work worldwide
+          </p>
+          <img src="images/gradient3&4.png" alt="" class="background-img" />
+          <button class="btn"><i class="bx bx-send-alt"></i> CONTACT ME</button>
+        </div>
+        <div class="card passion">
+          <h2 class="intro-title">PASSION FOR THE CODING</h2>
+          <p class="intro-text">
+            passionate about building efficient, customizable systems and
+            solving real-world problems through code. I enjoy working across the
+            stack—from Linux configuration to AI projects—focusing on
+            performance, simplicity, and continuous learning.
+          </p>
+          <img src="images/gradient3&4.png" alt="" class="background-img" />
+        </div>
       </div>
-      <div class="card tech">
-        <h2 class="intro-title">TECH STACK</h2>
-        <p class="intro-text">
-          I am proficient in Python , Java , and Bash , with hands-on experience in building backend logic,
-          academic AI projects, and Linux automation. I work confidently with REST APIs , data analysis libraries
-          like NumPy and pandas , and frameworks such as PyTorch . My expertise extends to Linux system
-          administration , particularly on Arch Linux with Hyprland , where I’ve customized environments using
-          tools like Waybar , Foot , Kitty , swww , and hyprpaper . I also have experience in configuring
-          systemd , udev rules , and notification systems like `notify-send` and `mako`. Additionally, I’m
-          familiar with Git/GitHub , SSH key setup , basic HTML/CSS/JavaScript , and development environments
-          like VS Code and NetBeans , allowing me to manage projects from terminal to UI efficiently.
-        </p>
-        <img src="images/gradient2.png" alt="" class="background-img">
-        <img src="images/skillsgroup.png" alt="skillsimage" class="skills">
+    </section>
+
+    <!-- Project showcase -->
+
+    <section class="project-section">
+      <h3>My Projects</h3>
+      <div
+        class="slider"
+        style="--height: 40rem; --width: 60rem; --quantity: 4"
+      >
+        <div class="list">
+          <div class="item" style="--position: 1">
+            <video loop playsinline src="videos/video2.mp4"></video>
+          </div>
+          <div class="item" style="--position: 2">
+            <video loop playsinline src="videos/video1.mp4"></video>
+          </div>
+          <div class="item" style="--position: 3">
+            <video loop playsinline src="videos/video3.mkv"></video>
+          </div>
+          <div class="item" style="--position: 4">
+            <video loop playsinline src="videos/video4.mkv"></video>
+          </div>
+        </div>
       </div>
-      <div class="card time">
-        <h2 class="intro-title">VERY FLEXIBLE WITH TIMEZONE, COMMUNICATION & LOCATION</h2>
-        <p class="intro-text">Based in Nepal, Bari and open to remote work worldwide
+    </section>
 
-        </p>
-        <img src="images/gradient3&4.png" alt="" class="background-img">
-        <button class="btn"><i class='bx  bx-send-alt'></i> CONTACT ME</button>
-      </div>
-      <div class="card passion">
-
-        <h2 class="intro-title">PASSION FOR THE CODING</h2>
-        <p class="intro-text">
-          passionate about building efficient, customizable systems and solving real-world problems through code. I
-          enjoy working across the stack—from Linux configuration to AI projects—focusing on performance, simplicity,
-          and continuous learning.
-        </p>
-        <img src="images/gradient3&4.png" alt="" class="background-img">
-      </div>
-    </div>
-  </section>
-
-
-
-
-  <!-- Project showcase -->
-
-  <section class="project-section">
-    <h3>My Projects</h3>
-    <div class="slider" style="
-    --height:40rem;
-    --width:60rem;
-    --quantity:4;
-  ">
-     <div class="list">
-       <div class="item" style="--position: 1"><video loop playsinline src="videos/video2.mp4"></video></div>
-        <div class="item" style="--position: 2"><video loop playsinline src="videos/video1.mp4"></video></div>
-        <div class="item" style="--position: 3"><video loop playsinline src="videos/video3.mkv"></video></div>
-        <div class="item" style="--position: 4"><video loop playsinline src="videos/video4.mkv"></video></div>
-      </div>
-    </div>
-  </section>
-
-
-
-  <script src="app.js"></script>
-</body>
-
+    <script src="app.js"></script>
+  </body>
 </html>
