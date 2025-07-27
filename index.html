@@ -55,15 +55,23 @@
 
       <div class="scroll-down"></div>
 
+      <!-- Loading indicator for 3D model -->
+      <div class="model3d-loader" id="model3dLoader">
+        <div class="loader-spinner"></div>
+        <p>Loading 3D Model...</p>
+      </div>
+      
       <script
         type="module"
         src="https://unpkg.com/@splinetool/viewer@1.10.19/build/spline-viewer.js"
       ></script>
-      <!-- 3d model link -->
+      <!-- 3d model link with optimized settings -->
       <spline-viewer
         class="model3d"
+        id="splineModel"
         loading-anim-type="none"
         url="https://prod.spline.design/fueagLqjD8ijVJdA/scene.splinecode"
+        style="opacity: 0; transition: opacity 0.5s ease;"
       ></spline-viewer>
     </main>
 

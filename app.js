@@ -47,10 +47,17 @@ gsap.timeline()
     ease: "power2.out"
   }, "-=0.2");
 
-// 2. 3D Model animations
+// 2. 3D Model animations with frame rate control
 const model3d = document.querySelector('.model3d');
+let splineApp = null;
+let isModelLoaded = false;
 
-// Initial 3D model animation
+// Frame rate control variables
+let targetFPS = isMobile ? 15 : 30; // Lower FPS on mobile
+let lastFrameTime = 0;
+const frameInterval = 1000 / targetFPS;
+
+// Initial 3D model animation (delayed for better loading)
 gsap.fromTo(model3d, 
   {
     scale: 0.3,
@@ -65,18 +72,152 @@ gsap.fromTo(model3d,
     x: 0,
     duration: 2,
     ease: "power3.out",
-    delay: 0.5
+    delay: 1.5 // Increased delay to let model load first
   }
 );
 
-// Continuous floating animation for 3D model
-gsap.to(model3d, {
-  y: "-=20",
-  duration: 3,
-  yoyo: true,
-  repeat: -1,
-  ease: "power1.inOut"
-});
+// Reduced floating animation for better performance
+if (!isMobile) {
+  gsap.to(model3d, {
+    y: "-=15",
+    duration: 4,
+    yoyo: true,
+    repeat: -1,
+    ease: "power1.inOut"
+  });
+}
+
+// Spline model frame rate control
+function controlSplineFrameRate() {
+  if (model3d && splineApp) {
+    const now = performance.now();
+    if (now - lastFrameTime >= frameInterval) {
+      // Allow Spline to render
+      if (splineApp.setTargetFrameRate) {
+        splineApp.setTargetFrameRate(targetFPS);
+      }
+      lastFrameTime = now;
+    }
+  }
+  requestAnimationFrame(controlSplineFrameRate);
+}
+
+// Get loading indicator
+const modelLoader = document.getElementById('model3dLoader');
+const splineModel = document.getElementById('splineModel');
+
+// Initialize Spline with performance settings
+if (model3d) {
+  // Show loading indicator initially
+  if (modelLoader) {
+    modelLoader.style.display = 'flex';
+  }
+  if (splineModel) {
+    splineModel.style.opacity = '0';
+  }
+  
+  model3d.addEventListener('load', () => {
+    isModelLoaded = true;
+    splineApp = model3d.splineApp;
+    
+    // Hide loading indicator and show model
+    if (modelLoader) {
+      gsap.to(modelLoader, {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => {
+          modelLoader.style.display = 'none';
+        }
+      });
+    }
+    
+    if (splineModel) {
+      gsap.to(splineModel, {
+        opacity: 1,
+        duration: 0.5,
+        delay: 0.2
+      });
+    }
+    
+    if (splineApp) {
+      // Apply performance optimizations
+      try {
+        // Set quality based on device
+        const quality = isMobile ? 'low' : 'medium';
+        if (splineApp.setQuality) {
+          splineApp.setQuality(quality);
+        }
+        
+        // Set target frame rate
+        if (splineApp.setTargetFrameRate) {
+          splineApp.setTargetFrameRate(targetFPS);
+        }
+        
+        // Disable shadows on mobile for better performance
+        if (isMobile && splineApp.setShadows) {
+          splineApp.setShadows(false);
+        }
+        
+        // Reduce anti-aliasing on mobile
+        if (isMobile && splineApp.setAntiAliasing) {
+          splineApp.setAntiAliasing(false);
+        }
+        
+        // Set pixel ratio for better performance
+        if (splineApp.setPixelRatio) {
+          const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : window.devicePixelRatio;
+          splineApp.setPixelRatio(pixelRatio);
+        }
+        
+      } catch (error) {
+        console.log('Some Spline optimization features not available:', error);
+      }
+    }
+    
+    // Start frame rate control
+    controlSplineFrameRate();
+  });
+  
+  // Handle loading errors
+  model3d.addEventListener('error', () => {
+    console.log('3D model failed to load');
+    
+    // Hide loading indicator
+    if (modelLoader) {
+      modelLoader.innerHTML = '<p style="color: #ff6b6b;">Failed to load 3D model</p>';
+      setTimeout(() => {
+        gsap.to(modelLoader, {
+          opacity: 0,
+          duration: 0.5,
+          onComplete: () => {
+            modelLoader.style.display = 'none';
+          }
+        });
+      }, 2000);
+    }
+    
+    // Hide model on mobile if it fails to load
+    if (isMobile) {
+      model3d.style.display = 'none';
+    }
+  });
+  
+  // Timeout fallback - hide loader after 10 seconds if model hasn't loaded
+  setTimeout(() => {
+    if (!isModelLoaded && modelLoader) {
+      modelLoader.innerHTML = '<p style="color: #ff9f43;">Model taking too long to load...</p>';
+      setTimeout(() => {
+        gsap.to(modelLoader, {
+          opacity: 0,
+          duration: 0.5,
+          onComplete: () => {
+            modelLoader.style.display = 'none';
+          }
+        });
+      }, 2000);
+    }
+  }, 10000);
+}
 
 // 3D Model interaction (simplified for mobile performance)
 let targetX = 0, targetY = 0;
@@ -381,17 +522,89 @@ if (contactForm) {
   });
 }
 
-// 6. Parallax effect for 3D model during scroll
-gsap.to(model3d, {
-  y: "-20%",
-  ease: "none",
-  scrollTrigger: {
-    trigger: "main",
-    start: "top top",
-    end: "bottom top",
-    scrub: 1
+// 6. Parallax effect for 3D model during scroll (reduced on mobile)
+if (!isMobile) {
+  gsap.to(model3d, {
+    y: "-20%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: "main",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1
+    }
+  });
+} else {
+  // Minimal parallax on mobile
+  gsap.to(model3d, {
+    y: "-10%",
+    ease: "none",
+    scrollTrigger: {
+      trigger: "main",
+      start: "top top",
+      end: "bottom top",
+      scrub: 2 // Slower scrub for better performance
+    }
+  });
+}
+
+// Performance monitoring and adaptive frame rate
+let performanceMonitor = {
+  frameCount: 0,
+  lastCheck: performance.now(),
+  
+  update() {
+    this.frameCount++;
+    const now = performance.now();
+    
+    // Check performance every 2 seconds
+    if (now - this.lastCheck > 2000) {
+      const fps = (this.frameCount * 1000) / (now - this.lastCheck);
+      
+      // Adaptive frame rate based on performance
+      if (fps < 20 && targetFPS > 10) {
+        targetFPS = Math.max(10, targetFPS - 2);
+        console.log(`Reducing target FPS to ${targetFPS} due to low performance`);
+      } else if (fps > 45 && targetFPS < (isMobile ? 20 : 30)) {
+        targetFPS = Math.min(isMobile ? 20 : 30, targetFPS + 2);
+      }
+      
+      this.frameCount = 0;
+      this.lastCheck = now;
+    }
+    
+    requestAnimationFrame(() => this.update());
   }
-});
+};
+
+// Start performance monitoring
+if (model3d) {
+  performanceMonitor.update();
+}
+
+// Pause/resume 3D model based on visibility
+let intersectionObserver;
+if ('IntersectionObserver' in window && model3d) {
+  intersectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (splineApp) {
+        if (entry.isIntersecting) {
+          // Resume 3D model when visible
+          if (splineApp.play) splineApp.play();
+          targetFPS = isMobile ? 15 : 30;
+        } else {
+          // Pause 3D model when not visible
+          if (splineApp.pause) splineApp.pause();
+          targetFPS = 5; // Very low FPS when not visible
+        }
+      }
+    });
+  }, {
+    threshold: 0.1 // Trigger when 10% visible
+  });
+  
+  intersectionObserver.observe(model3d);
+}
 
 // 7. Performance optimization: Refresh ScrollTrigger on window resize
 window.addEventListener('resize', () => {
