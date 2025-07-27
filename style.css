@@ -1499,3 +1499,405 @@ main h1 {
     height: 20rem;
   }
 }
+
+/* Educational Achievement Timeline Section */
+.education-section {
+  width: 100%;
+  margin-top: 15rem;
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.education-title {
+  margin-bottom: 5%;
+  font-size: 5rem;
+  background-image: linear-gradient(rgb(133, 133, 133), rgb(255, 255, 255));
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+
+/* Main Vertical Timeline Line */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #76b0ab 10%,
+    #76b0ab 90%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* Timeline Items Container */
+.timeline-items {
+  position: relative;
+  z-index: 2;
+}
+
+/* Individual Timeline Item */
+.timeline-item {
+  position: relative;
+  margin-bottom: 4rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Left Side Items */
+.timeline-item:nth-child(odd) {
+  justify-content: flex-end;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+  margin-right: 4rem;
+  text-align: right;
+}
+
+.timeline-item:nth-child(odd) .timeline-branch {
+  right: -2px;
+  border-top: 2px solid #76b0ab;
+  border-right: none;
+  border-left: 2px solid #76b0ab;
+}
+
+/* Right Side Items */
+.timeline-item:nth-child(even) {
+  justify-content: flex-start;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: 4rem;
+  text-align: left;
+}
+
+.timeline-item:nth-child(even) .timeline-branch {
+  left: -2px;
+  border-top: 2px solid #76b0ab;
+  border-left: none;
+  border-right: 2px solid #76b0ab;
+}
+
+/* Horizontal Branch Lines */
+.timeline-branch {
+  position: absolute;
+  top: 50%;
+  width: 3rem;
+  height: 2px;
+  background: #76b0ab;
+  z-index: 3;
+  transform: translateY(-50%);
+}
+
+/* Timeline Content Cards */
+.timeline-content {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(118, 176, 171, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.timeline-content:hover {
+  border-color: rgba(118, 176, 171, 0.6);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(118, 176, 171, 0.2);
+}
+
+/* Timeline Content Header */
+.timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #76b0ab, #5a9691);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.timeline-date {
+  background: linear-gradient(135deg, #76b0ab, #5a9691);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Timeline Content Body */
+.timeline-degree {
+  font-size: 1.8rem;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.timeline-institution {
+  font-size: 1.3rem;
+  color: #76b0ab;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.timeline-location {
+  font-size: 1rem;
+  color: #7b7b7b;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-location i {
+  color: #76b0ab;
+}
+
+.timeline-description {
+  color: #cccccc;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Timeline Details List */
+.timeline-details {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline-details li {
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.timeline-details li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+  width: 8px;
+  height: 8px;
+  background: #76b0ab;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+/* Timeline Node Circles */
+.timeline-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: #76b0ab;
+  border: 4px solid rgba(29, 40, 41, 1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 0 rgba(118, 176, 171, 0.4);
+}
+
+.timeline-item:hover .timeline-node {
+  background: #ffffff;
+  box-shadow: 0 0 0 8px rgba(118, 176, 171, 0.2);
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Animate Timeline on Scroll */
+.timeline-item {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideInUp 0.8s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Special Styling for Different Education Levels */
+.timeline-item.primary .timeline-icon {
+  background: linear-gradient(135deg, #ff9f43, #ff7675);
+}
+
+.timeline-item.secondary .timeline-icon {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+}
+
+.timeline-item.bachelor .timeline-icon {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+}
+
+.timeline-item.master .timeline-icon {
+  background: linear-gradient(135deg, #0984e3, #74b9ff);
+}
+
+.timeline-item.phd .timeline-icon {
+  background: linear-gradient(135deg, #e17055, #fdcb6e);
+}
+
+/* GPA/Grade Badge */
+.timeline-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #76b0ab, #5a9691);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .education-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-container {
+    width: 100%;
+    padding: 2rem 0;
+  }
+  
+  .timeline-line {
+    left: 2rem;
+  }
+  
+  .timeline-item {
+    margin-bottom: 3rem;
+    justify-content: flex-start !important;
+  }
+  
+  .timeline-item:nth-child(odd),
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+  }
+  
+  .timeline-content {
+    margin-left: 4rem !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+    max-width: none;
+    padding: 2rem;
+  }
+  
+  .timeline-branch {
+    left: -2px !important;
+    right: auto !important;
+    border-top: 2px solid #76b0ab !important;
+    border-left: none !important;
+    border-right: 2px solid #76b0ab !important;
+    width: 2rem;
+  }
+  
+  .timeline-node {
+    left: 2rem;
+  }
+  
+  .timeline-degree {
+    font-size: 1.5rem;
+  }
+  
+  .timeline-institution {
+    font-size: 1.1rem;
+  }
+  
+  .timeline-description {
+    font-size: 0.9rem;
+  }
+  
+  .timeline-details li {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .education-title {
+    font-size: 2rem;
+  }
+  
+  .timeline-content {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+  
+  .timeline-degree {
+    font-size: 1.3rem;
+  }
+  
+  .timeline-institution {
+    font-size: 1rem;
+  }
+  
+  .timeline-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .timeline-badge {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+  }
+}

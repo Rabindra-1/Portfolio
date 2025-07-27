@@ -197,7 +197,38 @@ gsap.fromTo(".card",
     y: 0,
     opacity: 1,
     scale: 1,
-    duration: 0.8,
+    duration: 0.8
+  });
+
+// Educational Achievement Tree Interactivity
+const treeNodes = document.querySelectorAll('.tree-node');
+treeNodes.forEach(node => {
+  node.addEventListener('click', () => {
+    const treeLevel = node.nextElementSibling;
+    if (treeLevel && treeLevel.classList.contains('tree-level')) {
+      treeLevel.classList.toggle('expanded');
+      treeLevel.classList.toggle('collapsed');
+    }
+    gsap.to(node, {
+      duration: 0.5,
+      rotation: treeLevel.classList.contains('expanded') ? 0 : 180,
+      ease: "power1.inOut"
+    });
+  });
+});
+
+// Trigger animation on load for expanded nodes
+treeNodes.forEach(node => {
+  const treeLevel = node.nextElementSibling;
+  if (treeLevel && treeLevel.classList.contains('expanded')) {
+    gsap.from(treeLevel, {
+      duration: 1,
+      height: 0,
+      opacity: 0,
+      ease: "power1.inOut"
+    });
+  }
+}
     stagger: 0.2,
     ease: "power3.out",
     scrollTrigger: {
@@ -522,7 +553,478 @@ if (codeTerminal) {
   });
 }
 
+// Education timeline animations
+gsap.fromTo(".education-title", 
+  { y: 100, opacity: 0 },
+  {
+    y: 0,
+    opacity: 1,
+    duration: 1.2,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".education-section",
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  }
+);
+
+// Animate timeline line and branches
+const timelineLines = document.querySelectorAll('.timeline-line, .timeline-branch');
+gsap.set(timelineLines, { scaleY: 0 });
+gsap.fromTo(timelineLines, { scaleY: 0 }, {
+  scaleY: 1,
+  duration: 1,
+  ease: "power3.out",
+  scrollTrigger: {
+    trigger: ".timeline-container",
+    start: "top 80%",
+    toggleActions: "play none none reverse"
+  }
+});
+
+// Animate timeline items
+const timelineItems = document.querySelectorAll('.timeline-item');
+timelineItems.forEach((item, index) => {
+  gsap.fromTo(item, 
+    { 
+      opacity: 0,
+      y: 50
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: item,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    }
+  );
+
+  // Animate icons
+  const icon = item.querySelector('.timeline-icon');
+  gsap.fromTo(icon, { scale: 0 }, {
+    scale: 1,
+    duration: 0.8,
+    ease: "back.out(1.7)",
+    scrollTrigger: {
+      trigger: item,
+      start: "top 85%",
+      toggleActions: "play none none reverse"
+    }
+  });
+
+  // Animate badges
+  const badges = item.querySelectorAll('.timeline-badge');
+  gsap.fromTo(badges, { y: -10, opacity: 0 }, {
+    y: 0,
+    opacity: 1,
+    duration: 0.6,
+    stagger: 0.2,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: item,
+      start: "top 85%",
+      toggleActions: "play none none reverse"
+    }
+  });
+});
+
+// Add pulsing effect on nodes
+gsap.to(".timeline-node", {
+  scale: 1.1,
+  duration: 1.5,
+  yoyo: true,
+  repeat: -1,
+  ease: "power1.inOut"
+});
+
+// Add floating animation to current education box
+gsap.to(".current-box", {
+  y: "+=5",
+  duration: 3,
+  yoyo: true,
+  repeat: -1,
+  ease: "power1.inOut"
+});
+
+// Add pulsing animation to current icon
+gsap.to(".current-icon", {
+  scale: 1.1,
+  duration: 2,
+  yoyo: true,
+  repeat: -1,
+  ease: "power2.inOut"
+});
+
+// Add glowing animation to connection line dots
+gsap.to(".connection-line::before", {
+  boxShadow: "0 0 20px rgba(255, 255, 255, 1)",
+  duration: 2,
+  yoyo: true,
+  repeat: -1,
+  ease: "power2.inOut"
+});
+
+// Add subtle pulsing to current education node
+const currentNode = document.querySelector('.leaf-node.current .leaf-circle');
+if (currentNode) {
+  gsap.to(currentNode, {
+    scale: 1.1,
+    duration: 1.5,
+    yoyo: true,
+    repeat: -1,
+    ease: "power1.inOut"
+  });
+}
+
 // 7. Performance optimization: Refresh ScrollTrigger on window resize
 window.addEventListener('resize', () => {
   ScrollTrigger.refresh();
 });
+
+
+
+
+// AI Generated items To be Deleted if not worked
+
+document.addEventListener('DOMContentLoaded', function() {
+            const nodes = document.querySelectorAll('.node.interactive');
+            
+            // Add click functionality to nodes
+            nodes.forEach(node => {
+                node.addEventListener('click', function() {
+                    const level = this.getAttribute('data-level');
+                    console.log(`Clicked on ${level} node`);
+                    
+                    // Add a temporary highlight effect
+                    this.style.transform = 'translateY(-10px) scale(1.05)';
+                    this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.3)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 300);
+                    
+                    // You can add more functionality here
+                    showNodeDetails(level);
+                });
+                
+                // Add keyboard accessibility
+                node.setAttribute('tabindex', '0');
+                node.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.click();
+                    }
+                });
+            });
+            
+            // Entrance animation
+            setTimeout(() => {
+                animateTreeEntry();
+            }, 500);
+        });
+        
+        function showNodeDetails(level) {
+            const details = {
+                'root': 'Educational foundation and learning journey overview',
+                'secondary': 'School Leaving Certificate (SEE) completed in 2075 with GPA 3.54',
+                'higher-secondary': 'Higher Secondary Education (+2) completed in 2078 with GPA 3.04', 
+                'bachelor': 'Currently pursuing BSc.CSIT - Bachelor in Computer Science and Information Technology',
+                'skills': 'Core programming languages: Python, Java, JavaScript',
+                'frameworks': 'Web development frameworks: Django, React, learning MERN stack',
+                'systems': 'Linux system administration with Arch Linux and Hyprland',
+                'future': 'Planning to learn AI/ML, Cloud technologies, and advanced DevOps practices'
+            };
+            
+            // Create a simple alert for demo purposes
+            // In a real application, you might show a modal or update a details panel
+            alert(`${level.toUpperCase()}: ${details[level]}`);
+        }
+        
+        function animateTreeEntry() {
+            const nodes = document.querySelectorAll('.node');
+            const connectors = document.querySelectorAll('.connector');
+            
+            // Initially hide all elements
+            [...nodes, ...connectors].forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+            });
+            
+            // Animate elements in sequence
+            let delay = 0;
+            
+            // Animate root first
+            setTimeout(() => {
+                nodes[0].style.opacity = '1';
+                nodes[0].style.transform = 'translateY(0)';
+            }, delay);
+            delay += 300;
+            
+            // Then connectors and subsequent levels
+            [...connectors, ...Array.from(nodes).slice(1)].forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, delay + (index * 100));
+            });
+        }
+
+// Enhanced Educational Tree Functionality
+const treeContainer = document.getElementById('educationTree');
+if (treeContainer) {
+    // Initialize tree state
+    let isExpanded = true;
+    let isAnimating = false;
+    
+    // Get all tree levels and nodes
+    const treeLevels = treeContainer.querySelectorAll('.tree-level');
+    const treeNodes = treeContainer.querySelectorAll('.tree-node');
+    const controlButtons = {
+        expandAll: document.getElementById('expandAll'),
+        collapseAll: document.getElementById('collapseAll'),
+        animateTree: document.getElementById('animateTree')
+    };
+    
+    // Node click interactions
+    treeNodes.forEach((node, index) => {
+        node.addEventListener('click', function() {
+            if (isAnimating) return;
+            
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+            
+            // Show node details
+            const nodeData = this.dataset.node;
+            const nodeLabel = this.querySelector('.node-label')?.textContent || 'Node';
+            const nodeDescription = this.querySelector('.node-description')?.textContent || 'Description';
+            
+            console.log(`Clicked on: ${nodeLabel} - ${nodeDescription}`);
+            
+            // Show tooltip with more details
+            showNodeTooltip(this, {
+                label: nodeLabel,
+                description: nodeDescription,
+                data: nodeData
+            });
+        });
+        
+        // Hover effects
+        node.addEventListener('mouseenter', function() {
+            this.style.zIndex = '10';
+        });
+        
+        node.addEventListener('mouseleave', function() {
+            this.style.zIndex = '';
+        });
+    });
+    
+    // Control button functionality
+    if (controlButtons.expandAll) {
+        controlButtons.expandAll.addEventListener('click', function() {
+            expandAllLevels();
+        });
+    }
+    
+    if (controlButtons.collapseAll) {
+        controlButtons.collapseAll.addEventListener('click', function() {
+            collapseAllLevels();
+        });
+    }
+    
+    if (controlButtons.animateTree) {
+        controlButtons.animateTree.addEventListener('click', function() {
+            animateTreeSequence();
+        });
+    }
+    
+    // Function to expand all levels
+    function expandAllLevels() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        treeLevels.forEach((level, index) => {
+            level.classList.remove('collapsed');
+            level.classList.add('expanded');
+            
+            // Animate nodes in this level
+            const levelNodes = level.querySelectorAll('.tree-node');
+            levelNodes.forEach((node, nodeIndex) => {
+                setTimeout(() => {
+                    node.classList.add('animate-in');
+                }, index * 200 + nodeIndex * 100);
+            });
+        });
+        
+        isExpanded = true;
+        setTimeout(() => {
+            isAnimating = false;
+            // Clean up animation classes
+            treeNodes.forEach(node => {
+                node.classList.remove('animate-in');
+            });
+        }, treeLevels.length * 300);
+    }
+    
+    // Function to collapse levels (except root)
+    function collapseAllLevels() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        // Keep level 0 (root) visible, collapse others
+        treeLevels.forEach((level, index) => {
+            if (index > 0) { // Skip root level
+                const levelNodes = level.querySelectorAll('.tree-node');
+                levelNodes.forEach((node, nodeIndex) => {
+                    setTimeout(() => {
+                        node.classList.add('animate-out');
+                    }, nodeIndex * 50);
+                });
+                
+                setTimeout(() => {
+                    level.classList.add('collapsed');
+                    level.classList.remove('expanded');
+                }, levelNodes.length * 100);
+            }
+        });
+        
+        isExpanded = false;
+        setTimeout(() => {
+            isAnimating = false;
+            // Clean up animation classes
+            treeNodes.forEach(node => {
+                node.classList.remove('animate-out');
+            });
+        }, 1000);
+    }
+    
+    // Function to animate tree sequence
+    function animateTreeSequence() {
+        if (isAnimating) return;
+        isAnimating = true;
+        
+        // Reset all nodes
+        treeNodes.forEach(node => {
+            node.style.transform = 'translateY(-20px) scale(0.8)';
+            node.style.opacity = '0';
+        });
+        
+        // Animate each level sequentially
+        treeLevels.forEach((level, levelIndex) => {
+            level.classList.remove('collapsed');
+            level.classList.add('expanded');
+            
+            const levelNodes = level.querySelectorAll('.tree-node');
+            levelNodes.forEach((node, nodeIndex) => {
+                setTimeout(() => {
+                    node.style.transition = 'all 0.6s ease-out';
+                    node.style.transform = 'translateY(0) scale(1)';
+                    node.style.opacity = '1';
+                }, levelIndex * 800 + nodeIndex * 150);
+            });
+        });
+        
+        setTimeout(() => {
+            isAnimating = false;
+            // Reset inline styles
+            treeNodes.forEach(node => {
+                node.style.transform = '';
+                node.style.opacity = '';
+                node.style.transition = '';
+            });
+        }, treeLevels.length * 1000 + 2000);
+    }
+    
+    // Function to show node tooltip
+    function showNodeTooltip(node, data) {
+        // Remove existing tooltips
+        document.querySelectorAll('.custom-tooltip').forEach(tooltip => {
+            tooltip.remove();
+        });
+        
+        // Create new tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'custom-tooltip';
+        tooltip.innerHTML = `
+            <div class="tooltip-header">
+                <strong>${data.label}</strong>
+            </div>
+            <div class="tooltip-body">
+                <p>${data.description}</p>
+                <small>Interactive Tree Node</small>
+            </div>
+        `;
+        
+        // Style tooltip
+        tooltip.style.cssText = `
+            position: fixed;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            z-index: 1000;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        document.body.appendChild(tooltip);
+        
+        // Position tooltip
+        const rect = node.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+        let top = rect.top - tooltipRect.height - 10;
+        
+        // Adjust if tooltip goes off screen
+        if (left < 10) left = 10;
+        if (left + tooltipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tooltipRect.width - 10;
+        }
+        if (top < 10) {
+            top = rect.bottom + 10;
+        }
+        
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+        
+        // Show tooltip
+        setTimeout(() => {
+            tooltip.style.opacity = '1';
+        }, 10);
+        
+        // Remove tooltip after delay
+        setTimeout(() => {
+            tooltip.style.opacity = '0';
+            setTimeout(() => {
+                tooltip.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    console.log('🌳 Educational Tree initialized with interactive features!');
+}
+        
+        // Responsive behavior
+        window.addEventListener('resize', function() {
+            // Adjust layout if needed for different screen sizes
+            const container = document.querySelector('.tree-container');
+            if (window.innerWidth < 768) {
+                container.style.padding = '2rem 1rem';
+            } else {
+                container.style.padding = '3rem';
+            }
+        });
