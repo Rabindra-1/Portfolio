@@ -6,6 +6,10 @@ const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerr
 const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+// Console welcome message
+console.log('%c🚀 Portfolio Loaded Successfully!', 'color: #00ff88; font-size: 16px; font-weight: bold;');
+console.log('%c✨ Animated Code Terminal Active', 'color: #64ffda; font-size: 12px;');
+
 // Card effects (desktop only for performance)
 if (!isMobile && !isTouchDevice) {
     document.querySelectorAll('.card').forEach(card => {
@@ -47,237 +51,121 @@ gsap.timeline()
     ease: "power2.out"
   }, "-=0.2");
 
-// 2. 3D Model animations with frame rate control
-const model3d = document.querySelector('.model3d');
-let splineApp = null;
-let isModelLoaded = false;
+// 2. Code Terminal animations
+const codeTerminal = document.querySelector('.code-terminal');
 
-// Frame rate control variables
-let targetFPS = isMobile ? 15 : 30; // Lower FPS on mobile
-let lastFrameTime = 0;
-const frameInterval = 1000 / targetFPS;
-
-// Initial 3D model animation (delayed for better loading)
-gsap.fromTo(model3d, 
-  {
-    scale: 0.3,
-    opacity: 0,
-    rotation: -15,
-    x: 100
-  },
-  {
-    scale: 1,
-    opacity: 1,
-    rotation: 0,
-    x: 0,
-    duration: 2,
-    ease: "power3.out",
-    delay: 1.5 // Increased delay to let model load first
-  }
-);
-
-// Reduced floating animation for better performance
-if (!isMobile) {
-  gsap.to(model3d, {
-    y: "-=15",
-    duration: 4,
-    yoyo: true,
-    repeat: -1,
-    ease: "power1.inOut"
-  });
-}
-
-// Spline model frame rate control
-function controlSplineFrameRate() {
-  if (model3d && splineApp) {
-    const now = performance.now();
-    if (now - lastFrameTime >= frameInterval) {
-      // Allow Spline to render
-      if (splineApp.setTargetFrameRate) {
-        splineApp.setTargetFrameRate(targetFPS);
-      }
-      lastFrameTime = now;
+// Initial terminal animation
+if (codeTerminal) {
+  gsap.fromTo(codeTerminal, 
+    {
+      scale: 0.8,
+      opacity: 0,
+      y: 50
+    },
+    {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power3.out",
+      delay: 1
     }
-  }
-  requestAnimationFrame(controlSplineFrameRate);
-}
-
-// Get loading indicator
-const modelLoader = document.getElementById('model3dLoader');
-const splineModel = document.getElementById('splineModel');
-
-// Initialize Spline with performance settings
-if (model3d) {
-  // Show loading indicator initially
-  if (modelLoader) {
-    modelLoader.style.display = 'flex';
-  }
-  if (splineModel) {
-    splineModel.style.opacity = '0';
-  }
+  );
   
-  model3d.addEventListener('load', () => {
-    isModelLoaded = true;
-    splineApp = model3d.splineApp;
-    
-    // Hide loading indicator and show model
-    if (modelLoader) {
-      gsap.to(modelLoader, {
-        opacity: 0,
-        duration: 0.5,
-        onComplete: () => {
-          modelLoader.style.display = 'none';
-        }
-      });
-    }
-    
-    if (splineModel) {
-      gsap.to(splineModel, {
-        opacity: 1,
-        duration: 0.5,
-        delay: 0.2
-      });
-    }
-    
-    if (splineApp) {
-      // Apply performance optimizations
-      try {
-        // Set quality based on device
-        const quality = isMobile ? 'low' : 'medium';
-        if (splineApp.setQuality) {
-          splineApp.setQuality(quality);
-        }
-        
-        // Set target frame rate
-        if (splineApp.setTargetFrameRate) {
-          splineApp.setTargetFrameRate(targetFPS);
-        }
-        
-        // Disable shadows on mobile for better performance
-        if (isMobile && splineApp.setShadows) {
-          splineApp.setShadows(false);
-        }
-        
-        // Reduce anti-aliasing on mobile
-        if (isMobile && splineApp.setAntiAliasing) {
-          splineApp.setAntiAliasing(false);
-        }
-        
-        // Set pixel ratio for better performance
-        if (splineApp.setPixelRatio) {
-          const pixelRatio = isMobile ? Math.min(window.devicePixelRatio, 1.5) : window.devicePixelRatio;
-          splineApp.setPixelRatio(pixelRatio);
-        }
-        
-      } catch (error) {
-        console.log('Some Spline optimization features not available:', error);
-      }
-    }
-    
-    // Start frame rate control
-    controlSplineFrameRate();
-  });
-  
-  // Handle loading errors
-  model3d.addEventListener('error', () => {
-    console.log('3D model failed to load');
-    
-    // Hide loading indicator
-    if (modelLoader) {
-      modelLoader.innerHTML = '<p style="color: #ff6b6b;">Failed to load 3D model</p>';
-      setTimeout(() => {
-        gsap.to(modelLoader, {
-          opacity: 0,
-          duration: 0.5,
-          onComplete: () => {
-            modelLoader.style.display = 'none';
-          }
-        });
-      }, 2000);
-    }
-    
-    // Hide model on mobile if it fails to load
-    if (isMobile) {
-      model3d.style.display = 'none';
-    }
-  });
-  
-  // Timeout fallback - hide loader after 10 seconds if model hasn't loaded
-  setTimeout(() => {
-    if (!isModelLoaded && modelLoader) {
-      modelLoader.innerHTML = '<p style="color: #ff9f43;">Model taking too long to load...</p>';
-      setTimeout(() => {
-        gsap.to(modelLoader, {
-          opacity: 0,
-          duration: 0.5,
-          onComplete: () => {
-            modelLoader.style.display = 'none';
-          }
-        });
-      }, 2000);
-    }
-  }, 10000);
-}
-
-// 3D Model interaction (simplified for mobile performance)
-let targetX = 0, targetY = 0;
-
-if (!isMobile) {
-  // Desktop mouse interaction only
-  document.addEventListener('mousemove', (e) => {
-    const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
-    
-    targetX = mouseX * 10;
-    targetY = mouseY * 10;
-  });
-} else {
-  // Minimal mobile interaction - only device orientation if available
-  if (window.DeviceOrientationEvent) {
-    // Throttle orientation events for better performance
-    let orientationThrottle = false;
-    window.addEventListener('deviceorientation', (e) => {
-      if (!orientationThrottle) {
-        orientationThrottle = true;
-        setTimeout(() => {
-          // Very subtle device orientation movement
-          targetX = (e.gamma || 0) * 0.1;
-          targetY = (e.beta || 0) * 0.05;
-          orientationThrottle = false;
-        }, 100); // Throttle to 10fps for better performance
-      }
+  // Subtle floating animation for terminal (desktop only)
+  if (!isMobile) {
+    gsap.to(codeTerminal, {
+      y: "+=5",
+      duration: 3,
+      yoyo: true,
+      repeat: -1,
+      ease: "power1.inOut"
     });
   }
 }
 
-// Smooth follow animation for 3D model (heavily optimized for mobile)
-if (!isMobile) {
-  // Full interaction for desktop
-  gsap.ticker.add(() => {
-    if (model3d) {
-      gsap.to(model3d, {
-        rotationY: targetX,
-        rotationX: -targetY,
-        duration: 0.8,
-        ease: "power2.out"
-      });
-    }
+// Auto-typing animation for code lines
+const codeLines = document.querySelectorAll('.code-line');
+if (codeLines.length > 0) {
+  // Store original text content and clear it
+  const originalTexts = Array.from(codeLines).map(line => {
+    const text = line.innerHTML;
+    line.innerHTML = '';
+    line.style.opacity = '1'; // Make lines visible immediately
+    return text;
   });
-} else {
-  // Minimal interaction for mobile - only update every 200ms
-  let mobileUpdateInterval;
-  const updateMobile3D = () => {
-    if (model3d && (Math.abs(targetX) > 0.1 || Math.abs(targetY) > 0.1)) {
-      gsap.to(model3d, {
-        rotationY: targetX,
-        rotationX: -targetY,
-        duration: 2,
-        ease: "power2.out"
-      });
+  
+  // Create cursor element
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  cursor.innerHTML = '|';
+  cursor.style.cssText = `
+    color: #00ff88;
+    animation: blink 1s infinite;
+    font-weight: normal;
+  `;
+  
+  // Add cursor blinking animation to head if not exists
+  if (!document.querySelector('#cursor-blink-style')) {
+    const style = document.createElement('style');
+    style.id = 'cursor-blink-style';
+    style.textContent = `
+      @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Auto-typing function
+  function typeCodeLines() {
+    let currentLineIndex = 0;
+    
+    function typeNextLine() {
+      if (currentLineIndex >= codeLines.length) {
+        // Remove cursor when all lines are typed
+        if (cursor.parentNode) {
+          cursor.parentNode.removeChild(cursor);
+        }
+        return;
+      }
+      
+      const currentLine = codeLines[currentLineIndex];
+      const targetText = originalTexts[currentLineIndex];
+      let currentText = '';
+      let charIndex = 0;
+      
+      // Add cursor to current line
+      currentLine.appendChild(cursor);
+      
+      function typeNextChar() {
+        if (charIndex < targetText.length) {
+          currentText += targetText[charIndex];
+          currentLine.innerHTML = currentText;
+          currentLine.appendChild(cursor); // Re-add cursor after text
+          charIndex++;
+          
+          // Variable typing speed for more natural feel
+          const delay = Math.random() * 15 + 10; // 10-25ms delay
+          setTimeout(typeNextChar, delay);
+        } else {
+          // Line complete, pause before next line
+          setTimeout(() => {
+            currentLineIndex++;
+            typeNextLine();
+          }, 200);
+        }
+      }
+      
+      typeNextChar();
     }
-    mobileUpdateInterval = setTimeout(updateMobile3D, 200);
-  };
-  updateMobile3D();
+    
+    typeNextLine();
+  }
+  
+  // Start typing animation after terminal appears
+  setTimeout(typeCodeLines, 2500);
 }
 
 // 3. Scroll-triggered animations
@@ -620,10 +508,10 @@ if (contactForm) {
   });
 }
 
-// 6. Parallax effect for 3D model during scroll (reduced on mobile)
-if (!isMobile) {
-  gsap.to(model3d, {
-    y: "-20%",
+// 6. Code terminal scroll effects
+if (codeTerminal) {
+  gsap.to(codeTerminal, {
+    y: "-5%",
     ease: "none",
     scrollTrigger: {
       trigger: "main",
@@ -632,76 +520,6 @@ if (!isMobile) {
       scrub: 1
     }
   });
-} else {
-  // Minimal parallax on mobile
-  gsap.to(model3d, {
-    y: "-10%",
-    ease: "none",
-    scrollTrigger: {
-      trigger: "main",
-      start: "top top",
-      end: "bottom top",
-      scrub: 2 // Slower scrub for better performance
-    }
-  });
-}
-
-// Performance monitoring and adaptive frame rate
-let performanceMonitor = {
-  frameCount: 0,
-  lastCheck: performance.now(),
-  
-  update() {
-    this.frameCount++;
-    const now = performance.now();
-    
-    // Check performance every 2 seconds
-    if (now - this.lastCheck > 2000) {
-      const fps = (this.frameCount * 1000) / (now - this.lastCheck);
-      
-      // Adaptive frame rate based on performance
-      if (fps < 20 && targetFPS > 10) {
-        targetFPS = Math.max(10, targetFPS - 2);
-        console.log(`Reducing target FPS to ${targetFPS} due to low performance`);
-      } else if (fps > 45 && targetFPS < (isMobile ? 20 : 30)) {
-        targetFPS = Math.min(isMobile ? 20 : 30, targetFPS + 2);
-      }
-      
-      this.frameCount = 0;
-      this.lastCheck = now;
-    }
-    
-    requestAnimationFrame(() => this.update());
-  }
-};
-
-// Start performance monitoring
-if (model3d) {
-  performanceMonitor.update();
-}
-
-// Pause/resume 3D model based on visibility
-let intersectionObserver;
-if ('IntersectionObserver' in window && model3d) {
-  intersectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (splineApp) {
-        if (entry.isIntersecting) {
-          // Resume 3D model when visible
-          if (splineApp.play) splineApp.play();
-          targetFPS = isMobile ? 15 : 30;
-        } else {
-          // Pause 3D model when not visible
-          if (splineApp.pause) splineApp.pause();
-          targetFPS = 5; // Very low FPS when not visible
-        }
-      }
-    });
-  }, {
-    threshold: 0.1 // Trigger when 10% visible
-  });
-  
-  intersectionObserver.observe(model3d);
 }
 
 // 7. Performance optimization: Refresh ScrollTrigger on window resize

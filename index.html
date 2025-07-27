@@ -55,24 +55,55 @@
 
       <div class="scroll-down"></div>
 
-      <!-- Loading indicator for 3D model -->
-      <div class="model3d-loader" id="model3dLoader">
-        <div class="loader-spinner"></div>
-        <p>Loading 3D Model...</p>
+      <!-- Code Terminal Interface -->
+      <div class="code-terminal" id="codeTerminal">
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="btn-close"></span>
+            <span class="btn-minimize"></span>
+            <span class="btn-maximize"></span>
+          </div>
+          <div class="terminal-title">~/portfolio/developer.py</div>
+        </div>
+        <div class="terminal-body">
+          <div class="code-editor">
+            <div class="line-numbers">
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+              <span>6</span>
+              <span>7</span>
+              <span>8</span>
+              <span>9</span>
+              <span>10</span>
+              <span>11</span>
+              <span>12</span>
+              <span>13</span>
+              <span>14</span>
+              <span>15</span>
+            </div>
+            <div class="code-content">
+              <div class="code-line"><span class="keyword">class</span> <span class="class-name">Developer</span>:</div>
+              <div class="code-line">    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>):</div>
+              <div class="code-line">        <span class="keyword">self</span>.<span class="property">name</span> = <span class="string">"Rabindra Kumar Sah"</span></div>
+              <div class="code-line">        <span class="keyword">self</span>.<span class="property">role</span> = <span class="string">"Full Stack Developer"</span></div>
+              <div class="code-line">        <span class="keyword">self</span>.<span class="property">location</span> = <span class="string">"Nepal"</span></div>
+              <div class="code-line">        <span class="keyword">self</span>.<span class="property">skills</span> = [<span class="string">"Python"</span>, <span class="string">"Java"</span>, <span class="string">"JavaScript"</span>]</div>
+              <div class="code-line">        <span class="keyword">self</span>.<span class="property">passion</span> = <span class="string">"Building amazing things"</span></div>
+              <div class="code-line"></div>
+              <div class="code-line">    <span class="keyword">def</span> <span class="function">code</span>(<span class="keyword">self</span>):</div>
+              <div class="code-line">        <span class="keyword">while</span> <span class="boolean">True</span>:</div>
+              <div class="code-line">            <span class="function">print</span>(<span class="string">"Learning something new..."</span>)</div>
+              <div class="code-line">            <span class="keyword">self</span>.<span class="function">build_projects</span>()</div>
+              <div class="code-line">            <span class="keyword">self</span>.<span class="function">solve_problems</span>()</div>
+              <div class="code-line"></div>
+              <div class="code-line typing-line"><span class="comment"># Currently typing...</span><span class="cursor">|</span></div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <!-- 3d model link with optimized settings -->
-      <script
-        type="module"
-        src="https://unpkg.com/@splinetool/viewer@1.10.19/build/spline-viewer.js"
-      ></script>
-      <spline-viewer
-        class="model3d"
-        id="splineModel"
-        loading-anim-type="none"
-        url="https://prod.spline.design/fueagLqjD8ijVJdA/scene.splinecode"
-        style="opacity: 0; transition: opacity 0.5s ease;"
-      ></spline-viewer>
     </main>
 
     <!-- About Us section -->
