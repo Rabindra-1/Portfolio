@@ -366,6 +366,104 @@ if (!isMobile) {
   }
 }
 
+// Experience section animations
+gsap.fromTo(".experience-title", 
+  { y: 100, opacity: 0 },
+  {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    scrollTrigger: {
+      trigger: ".experience-section",
+      start: "top 80%",
+      toggleActions: "play none none reverse"
+    }
+  }
+);
+
+// 404 Meme animation
+gsap.fromTo(".experience-meme", 
+  { 
+    x: -100, 
+    opacity: 0,
+    rotationY: -15
+  },
+  {
+    x: 0,
+    opacity: 1,
+    rotationY: 0,
+    duration: 1.2,
+    ease: "back.out(1.7)",
+    scrollTrigger: {
+      trigger: ".experience-container",
+      start: "top 70%",
+      toggleActions: "play none none reverse"
+    }
+  }
+);
+
+// Experience cards stagger animation
+gsap.fromTo(".experience-card", 
+  { 
+    x: 100, 
+    opacity: 0,
+    scale: 0.9
+  },
+  {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: ".experience-content",
+      start: "top 70%",
+      toggleActions: "play none none reverse"
+    }
+  }
+);
+
+// Animate loading bar continuously
+gsap.to(".loading-progress", {
+  scaleX: 1.5,
+  duration: 2,
+  yoyo: true,
+  repeat: -1,
+  ease: "power2.inOut",
+  transformOrigin: "left center"
+});
+
+// Update loading text periodically
+if (document.querySelector('.loading-text')) {
+  const loadingTexts = [
+    "Loading real-world experience... 0%",
+    "Compiling knowledge... 25%",
+    "Processing skills... 50%",
+    "Optimizing potential... 75%",
+    "Almost ready... 99%",
+    "Still loading... 0%"
+  ];
+  
+  let textIndex = 0;
+  const loadingTextElement = document.querySelector('.loading-text');
+  
+  setInterval(() => {
+    gsap.to(loadingTextElement, {
+      opacity: 0,
+      duration: 0.3,
+      onComplete: () => {
+        loadingTextElement.textContent = loadingTexts[textIndex];
+        textIndex = (textIndex + 1) % loadingTexts.length;
+        gsap.to(loadingTextElement, {
+          opacity: 1,
+          duration: 0.3
+        });
+      }
+    });
+  }, 3000);
+}
+
 // Project section animation
 gsap.fromTo(".project-section h3", 
   { y: 100, opacity: 0 },

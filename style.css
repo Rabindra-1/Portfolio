@@ -317,6 +317,295 @@ main h1 {
   color: transparent;
 }
 
+/* Experience Section */
+.experience-section {
+  width: 100%;
+  margin-top: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+}
+
+.experience-title {
+  margin-bottom: 5%;
+  font-size: 5rem;
+  background-image: linear-gradient(rgb(133, 133, 133), rgb(255, 255, 255));
+  background-clip: text;
+  color: transparent;
+}
+
+.experience-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 90%;
+  max-width: 1200px;
+  align-items: start;
+}
+
+/* 404 Meme Section */
+.experience-meme {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #ff6b6b, #ff9f43, #76b0ab);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  line-height: 1;
+  margin-bottom: 1rem;
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+}
+
+.error-message h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.error-message p {
+  color: #7b7b7b;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.meme-details {
+  margin-top: 2rem;
+}
+
+.meme-subtitle {
+  color: #76b0ab;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.loading-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.loading-progress {
+  height: 100%;
+  width: 15%;
+  background: linear-gradient(90deg, #76b0ab, #5a9691);
+  border-radius: 4px;
+  animation: loading 3s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% { width: 0%; }
+  50% { width: 25%; }
+  100% { width: 15%; }
+}
+
+.loading-text {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Meme Character */
+.meme-character {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  opacity: 0.7;
+}
+
+.developer-icon {
+  position: relative;
+}
+
+.developer-icon .head {
+  width: 30px;
+  height: 30px;
+  background: #76b0ab;
+  border-radius: 50%;
+  margin: 0 auto 5px;
+}
+
+.developer-icon .body {
+  width: 40px;
+  height: 35px;
+  background: #333;
+  border-radius: 8px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.developer-icon .laptop {
+  width: 20px;
+  height: 12px;
+  background: #555;
+  border-radius: 2px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.developer-icon .laptop::before {
+  content: '';
+  width: 18px;
+  height: 10px;
+  background: #000;
+  border-radius: 1px;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.thought-bubble {
+  position: absolute;
+  top: -40px;
+  left: -20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  animation: thinking 4s ease-in-out infinite;
+}
+
+.thought-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes thinking {
+  0%, 70% { opacity: 0; transform: translateY(5px); }
+  80%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(5px); }
+}
+
+/* Experience Content Cards */
+.experience-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.experience-card {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.07));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card:hover {
+  border-color: rgba(118, 176, 171, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.experience-card.future {
+  border-color: rgba(255, 159, 67, 0.3);
+}
+
+.experience-card.future:hover {
+  border-color: rgba(255, 159, 67, 0.6);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header i {
+  font-size: 1.5rem;
+  color: #76b0ab;
+  width: 24px;
+}
+
+.experience-card.future .card-header i {
+  color: #ff9f43;
+}
+
+.card-header h3 {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.experience-card p {
+  color: #7b7b7b;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.experience-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.experience-card li {
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  padding-left: 0.5rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.experience-card li::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 0.6rem;
+  width: 6px;
+  height: 6px;
+  background: #76b0ab;
+  border-radius: 50%;
+}
+
+.experience-card.future li::before {
+  background: #ff9f43;
+}
+
 .grid {
   position: relative;
   display: grid;
@@ -822,6 +1111,61 @@ main h1 {
   .about-title {
     font-size: 2.5rem;
     margin-bottom: 3rem;
+  }
+  
+  /* Experience section mobile */
+  .experience-section {
+    margin-top: 8rem;
+    padding: 3rem 0;
+  }
+  
+  .experience-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .experience-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    width: 100%;
+  }
+  
+  .experience-meme {
+    min-height: 400px;
+    padding: 2rem 1.5rem;
+  }
+  
+  .error-code {
+    font-size: 5rem;
+  }
+  
+  .error-message h2 {
+    font-size: 1.5rem;
+  }
+  
+  .error-message p {
+    font-size: 1rem;
+  }
+  
+  .meme-character {
+    bottom: 15px;
+    right: 20px;
+  }
+  
+  .experience-card {
+    padding: 1.5rem;
+  }
+  
+  .card-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .experience-card p {
+    font-size: 0.9rem;
+  }
+  
+  .experience-card li {
+    font-size: 0.85rem;
   }
   
   .grid {
