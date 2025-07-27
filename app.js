@@ -4,33 +4,19 @@ gsap.registerPlugin(ScrollTrigger);
 // Device detection
 const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// Card hover effects (desktop) and touch effects (mobile)
-document.querySelectorAll('.card').forEach(card => {
-    if (!isMobile) {
-        // Desktop hover effects
+// Card effects (desktop only for performance)
+if (!isMobile && !isTouchDevice) {
+    document.querySelectorAll('.card').forEach(card => {
+        // Desktop hover effects only
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
             card.style.setProperty('--x', `${e.clientX - rect.left}px`);
             card.style.setProperty('--y', `${e.clientY - rect.top}px`);
         });
-    } else {
-        // Mobile touch effects
-        card.addEventListener('touchstart', e => {
-            const rect = card.getBoundingClientRect();
-            const touch = e.touches[0];
-            card.style.setProperty('--x', `${touch.clientX - rect.left}px`);
-            card.style.setProperty('--y', `${touch.clientY - rect.top}px`);
-        });
-        
-        card.addEventListener('touchmove', e => {
-            const rect = card.getBoundingClientRect();
-            const touch = e.touches[0];
-            card.style.setProperty('--x', `${touch.clientX - rect.left}px`);
-            card.style.setProperty('--y', `${touch.clientY - rect.top}px`);
-        });
-    }
-});
+    });
+}
 
 // GSAP Animations
 
@@ -92,87 +78,66 @@ gsap.to(model3d, {
   ease: "power1.inOut"
 });
 
-// Mouse/Touch interaction with 3D model
-let mouseX = 0, mouseY = 0;
+// 3D Model interaction (simplified for mobile performance)
 let targetX = 0, targetY = 0;
-let isInteracting = false;
 
 if (!isMobile) {
-  // Desktop mouse interaction
+  // Desktop mouse interaction only
   document.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    const mouseY = (e.clientY / window.innerHeight) * 2 - 1;
     
     targetX = mouseX * 10;
     targetY = mouseY * 10;
   });
 } else {
-  // Mobile touch interaction
-  let touchStartX = 0, touchStartY = 0;
-  
-  document.addEventListener('touchstart', (e) => {
-    isInteracting = true;
-    const touch = e.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-  });
-  
-  document.addEventListener('touchmove', (e) => {
-    if (!isInteracting) return;
-    e.preventDefault(); // Prevent scrolling during interaction
-    
-    const touch = e.touches[0];
-    const deltaX = (touch.clientX - touchStartX) / window.innerWidth;
-    const deltaY = (touch.clientY - touchStartY) / window.innerHeight;
-    
-    targetX = deltaX * 20; // Amplify for mobile
-    targetY = -deltaY * 20;
-  }, { passive: false });
-  
-  document.addEventListener('touchend', () => {
-    isInteracting = false;
-    // Gradually return to center
-    gsap.to({ x: targetX, y: targetY }, {
-      x: 0,
-      y: 0,
-      duration: 2,
-      ease: "power2.out",
-      onUpdate: function() {
-        targetX = this.targets()[0].x;
-        targetY = this.targets()[0].y;
-      }
-    });
-  });
-  
-  // Device orientation for mobile (if supported)
+  // Minimal mobile interaction - only device orientation if available
   if (window.DeviceOrientationEvent) {
+    // Throttle orientation events for better performance
+    let orientationThrottle = false;
     window.addEventListener('deviceorientation', (e) => {
-      if (!isInteracting) {
-        // Use device orientation for subtle movement
-        targetX = (e.gamma || 0) * 0.3; // Left-right tilt
-        targetY = (e.beta || 0) * 0.2;  // Front-back tilt
+      if (!orientationThrottle) {
+        orientationThrottle = true;
+        setTimeout(() => {
+          // Very subtle device orientation movement
+          targetX = (e.gamma || 0) * 0.1;
+          targetY = (e.beta || 0) * 0.05;
+          orientationThrottle = false;
+        }, 100); // Throttle to 10fps for better performance
       }
     });
   }
 }
 
-// Smooth follow animation for 3D model (optimized for mobile)
-let lastUpdate = 0;
-const updateInterval = isMobile ? 1000/30 : 1000/60; // 30fps on mobile, 60fps on desktop
-
-gsap.ticker.add((time) => {
-  if (time - lastUpdate < updateInterval) return;
-  lastUpdate = time;
-  
-  if (model3d) {
-    gsap.to(model3d, {
-      rotationY: targetX,
-      rotationX: -targetY,
-      duration: isMobile ? 1.2 : 0.8, // Slower on mobile for better performance
-      ease: "power2.out"
-    });
-  }
-});
+// Smooth follow animation for 3D model (heavily optimized for mobile)
+if (!isMobile) {
+  // Full interaction for desktop
+  gsap.ticker.add(() => {
+    if (model3d) {
+      gsap.to(model3d, {
+        rotationY: targetX,
+        rotationX: -targetY,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+    }
+  });
+} else {
+  // Minimal interaction for mobile - only update every 200ms
+  let mobileUpdateInterval;
+  const updateMobile3D = () => {
+    if (model3d && (Math.abs(targetX) > 0.1 || Math.abs(targetY) > 0.1)) {
+      gsap.to(model3d, {
+        rotationY: targetX,
+        rotationX: -targetY,
+        duration: 2,
+        ease: "power2.out"
+      });
+    }
+    mobileUpdateInterval = setTimeout(updateMobile3D, 200);
+  };
+  updateMobile3D();
+}
 
 // 3. Scroll-triggered animations
 
@@ -275,24 +240,26 @@ gsap.fromTo(".project-section h3",
   }
 );
 
-// Video hover interactions
-document.querySelectorAll('.slider .item video').forEach(video => {
-  video.addEventListener('mouseenter', () => {
-    gsap.to(video, {
-      scale: 1.05,
-      duration: 0.3,
-      ease: "power2.out"
+// Video hover interactions (desktop only)
+if (!isMobile) {
+  document.querySelectorAll('.slider .item video').forEach(video => {
+    video.addEventListener('mouseenter', () => {
+      gsap.to(video, {
+        scale: 1.05,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    });
+    
+    video.addEventListener('mouseleave', () => {
+      gsap.to(video, {
+        scale: 1,
+        duration: 0.3,
+        ease: "power2.out"
+      });
     });
   });
-  
-  video.addEventListener('mouseleave', () => {
-    gsap.to(video, {
-      scale: 1,
-      duration: 0.3,
-      ease: "power2.out"
-    });
-  });
-});
+}
 
 // Contact section animation
 gsap.fromTo(".contact-section h3", 

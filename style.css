@@ -24,6 +24,10 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1d2829", endColorstr="#1d2829", GradientType=1);
   color: white;
   padding: 3rem;
+  /* Mobile performance optimizations */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
 }
 
 * {
@@ -32,6 +36,20 @@ body {
   box-sizing: border-box;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* GPU acceleration for better mobile performance */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Ensure smooth scrolling on all devices */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize touch interactions */
+.card, .model3d, .social-link, button {
+  touch-action: manipulation;
 }
 
 header {
@@ -178,6 +196,10 @@ main h1 {
   pointer-events: auto;
   border-radius: 20px;
   overflow: hidden;
+  /* Optimize 3D model performance */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .about-section {
@@ -615,6 +637,20 @@ main h1 {
 @media (max-width: 768px) {
   body {
     padding: 1rem;
+    /* Enhanced mobile scroll performance */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Disable GPU-intensive effects on mobile */
+  .card::before {
+    display: none;
+  }
+  
+  .card:hover {
+    transform: none;
+    box-shadow: none;
   }
   
   header {
