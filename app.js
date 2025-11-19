@@ -52,6 +52,27 @@ gsap.timeline()
   }, "-=0.2");
 
 // 2. Code Terminal animations
+
+
+// Safe GSAP intro animation
+const terminal = document.querySelector("#codeTerminal");
+
+if (terminal) {
+  gsap.fromTo(
+    terminal,
+    { scale: 0.8, opacity: 0, y: 50 },
+    {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: "power3.out",
+      delay: 1
+    }
+  );
+}
+
+
 const codeTerminal = document.querySelector('.code-terminal');
 
 // Initial terminal animation
@@ -230,6 +251,7 @@ treeNodes.forEach(node => {
   }
 }
     stagger: 0.2,
+    duration: 0.8,
     ease: "power3.out",
     scrollTrigger: {
       trigger: ".grid",
@@ -237,7 +259,7 @@ treeNodes.forEach(node => {
       end: "bottom 20%",
       toggleActions: "play none none reverse"
     }
-  }
+  },
 );
 
 // Self-image animation
