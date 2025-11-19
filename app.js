@@ -1,3 +1,4 @@
+
 // Register GSAP ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
@@ -249,8 +250,8 @@ treeNodes.forEach(node => {
       ease: "power1.inOut"
     });
   }
-}
-    stagger: 0.2,
+},
+    {stagger: 0.2,
     duration: 0.8,
     ease: "power3.out",
     scrollTrigger: {
@@ -258,8 +259,7 @@ treeNodes.forEach(node => {
       start: "top 80%",
       end: "bottom 20%",
       toggleActions: "play none none reverse"
-    }
-  },
+    }}
 );
 
 // Self-image animation
@@ -479,11 +479,13 @@ const cardBtns = document.querySelectorAll('.btn');
 // Contact button in header
 if (contactBtn) {
   contactBtn.addEventListener('click', () => {
-    gsap.to(window, {
-      duration: 1.5,
-      scrollTo: "#contact",
-      ease: "power2.inOut"
-    });
+    // gsap.to(window, {
+    //   duration: 1.5,
+    //   scrollTo: "#contact",
+    //   ease: "power2.inOut"
+    // });
+
+    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth'});
   });
   
   contactBtn.addEventListener('mouseenter', () => {
